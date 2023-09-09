@@ -3,10 +3,12 @@ const form = document.getElementById("captchaForm");
 const formInput = document.getElementById("captchaAnswer");
 const newCaptchaButton = document.getElementById("newCaptcha");
 const captchaFormButton = document.getElementById("captchaFormButton");
+// const errorsDiv = document.getElementById("errors");
 
 let captchaAnswer;
 
 const generateCaptcha = () => {
+
   captchaFormButton.disabled = false;
 
   const options = ["+", "-", "*"];
@@ -33,11 +35,11 @@ newCaptchaButton.addEventListener("click", () => generateCaptcha())
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   if (Number(formInput.value) !== Number(captchaAnswer)) {
-    console.error("Bad answer!");
+    console.error("Wrong answer!")
     formInput.value = "";
     generateCaptcha();
   } else {
-    console.log("Good answer! Sending your request to the server...")
+    console.log("Good answer! Sending your request to our server...")
     formInput.value = "";
     captchaFormButton.disabled = true;
   }
