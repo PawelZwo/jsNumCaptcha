@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Captcha</title>
+    <script defer src="index.js"></script>
 </head>
 
 <body style="margin-left: 40vw; margin-top: 40vh">
@@ -23,63 +24,5 @@
     </form>
 
 </div>
-
-<script defer>
-  const captchaQuestion = document.getElementById("captchaQuestion");
-  const form = document.getElementById("captchaForm");
-  const formInput = document.getElementById("captchaAnswer");
-  const newCaptchaButton = document.getElementById("newCaptcha");
-
-  const options = ["+", "-", "*"];
-
-  const generateCaptcha = () => {
-    let randomOption = Math.floor(Math.random() * options.length),
-      randomA = Math.floor(Math.random() * (10 - 1) + 1),
-      randomB = Math.floor(Math.random() * (10 - 1) + 1),
-      captchaText = `${randomA} ${options[randomOption]} ${randomB} = ?`,
-      captchaAnswer;
-
-    switch (options[randomOption]) {
-      case "+":
-        captchaAnswer = randomA + randomB;
-        break;
-      case "-":
-        captchaAnswer = randomA - randomB;
-        break;
-      case "*":
-        captchaAnswer = randomA * randomB;
-        break;
-    }
-
-    console.log(`captchaAnswer: ${captchaAnswer}, captchaText: ${captchaText}`)
-    return [captchaAnswer, captchaText]
-  }
-
-  let [captchaAnswer, captchaText] = generateCaptcha();
-  captchaQuestion.innerText = captchaText;
-
-  newCaptchaButton.addEventListener("click", e => {
-    e.preventDefault();
-    let [captchaAnswer, captchaText] = generateCaptcha();
-    captchaQuestion.innerText = captchaText;
-    return captchaAnswer;
-  })
-
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (Number(formInput.value) !== Number(captchaAnswer)) {
-      console.error("Bad answer!!");
-      formInput.value = "";
-      let [captchaAnswer, captchaText] = generateCaptcha();
-      captchaQuestion.textContent = captchaText;
-      return captchaAnswer;
-    }
-    /* Send request to an API/Server */
-    console.log("Good answer!")
-    formInput.value = "";
-  })
-
-
-</script>
 </body>
 </html>
